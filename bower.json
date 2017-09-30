@@ -1,0 +1,21 @@
+{
+  "name": "mg-input-time",
+  "version": "1.0.0",
+  "homepage": "https://github.com/possible819/mg-input-time",
+  "authors": [
+    "Jay Lee <jaylee.possible@gmail.com>"
+  ],
+  "description": "polymer mg-input-time component",
+  "main": "mg-input-time.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "polymer/polymer#^1.9.2"
+  }
+}
