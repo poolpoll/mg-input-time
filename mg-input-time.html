@@ -1,0 +1,72 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="mg-input-time">
+	<template>
+		<style>
+			input {
+				-webkit-appearance: none;
+				color: transparent;
+				height: 0px;
+				width: 0px;
+				border: 0;
+				position: absolute;
+			}
+			span {
+				text-align: var(--mg-input-text-align, center);
+				font-size: var(--mg-font-size);
+				display: block;
+			}
+		</style>
+		<div>
+			<input id="mg-input-time" type="time" on-change="_timeSelected" value="{{value}}" />
+			<label for="mg-input-time">
+				<span>{{displayValue}}</span>
+			</label>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'mg-input-time',
+
+			properties: {
+				value: {
+					type: Date,
+					value: function() {
+						var today = new Date();
+						var hours = today.getHours();
+						var minutes = today.getMinutes();
+						return hours + ':' + minutes;
+					},
+					observer: '_valueChanged',
+					notify: true
+				},
+
+				formatter: {
+					type: Function
+				}
+			},
+
+			setFormatter: function(formatter) {
+				this.formatter = formatter;
+			},
+
+			defaultFormatter: function(time) {
+        var hour = parseInt(time.slice(0, 2));
+        var formatedHour = (hour >= 13) ? hour - 12 : hour;
+        var noon = (hour < 12) ? '오전 ' : '오후 ';
+        var min = parseInt(time.slice(3, 5));
+				return noon + formatedHour + '시 ' + min + '분';
+			},
+
+			_timeSelected: function(event) {
+				var time = event.target.value ? event.target.value : '0:00';
+				this.displayValue = (this.formatter) ? this.formatter(time) : this.defaultFormatter(time);
+			},
+
+			_valueChanged: function(value) {
+				this.$['mg-input-time'].value = value;
+				this.displayValue = (this.formatter) ? this.formatter(value) : this.defaultFormatter(value);
+			},
+		})
+	</script>
+</dom-module>
